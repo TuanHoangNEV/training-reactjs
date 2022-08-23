@@ -27,6 +27,9 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ src }) => {
     };
   }, [player]);
 
+  //type="application/x-mpegURL"
+  //type="video/mp4"
+  //type="application/x-rtsp"
   return (
     <div>
       <video className="video-js m-auto" ref={videoRef} controls>

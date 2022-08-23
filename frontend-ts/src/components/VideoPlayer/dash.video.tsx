@@ -19,7 +19,7 @@ function DashPlayer() {
 
     return (
         <div id="video-player" className="App">
-            {fileDetected ?
+             {fileDetected ?
                 <ReactHlsPlayer
                     src='videos/output.m3u8'
                     autoPlay={true}
@@ -30,7 +30,17 @@ function DashPlayer() {
                     playerRef={playerRef}
                 />
                 : null
-            }
+             }
+
+            {/*<ReactHlsPlayer*/}
+            {/*    src='http://localhost:5000/files?file=playlist.m3u8'*/}
+            {/*    autoPlay={true}*/}
+            {/*    controls={true}*/}
+            {/*    width={640}*/}
+            {/*    height={480}*/}
+            {/*    muted={true}*/}
+            {/*    playerRef={playerRef}*/}
+            {/*/>*/}
         </div>
     );
 }

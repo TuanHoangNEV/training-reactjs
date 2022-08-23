@@ -14,7 +14,7 @@ app.get('/video', (req, res) => {
 
     // rtsp://username:password@ip_address
     // videos/video.mp4
-    ffmpeg('rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4', { timeout: 100000 }).addOptions([
+    ffmpeg('rtsp://rtsp.stream/pattern', { timeout: 100000 }).addOptions([
         '-profile:v baseline',
         '-fflags -nobuffer', // causes lower latency
         '-probesize 32', // causes lower latency

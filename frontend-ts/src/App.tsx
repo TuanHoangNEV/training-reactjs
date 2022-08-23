@@ -12,6 +12,7 @@ import FilmPlayer from "./components/VideoPlayer/film.player";
 import I18nHome from './components/i18n/i18n.home';
 import Musique from './components/music';
 import QuizGameHome from "./components/quiz";
+import WsPlayer from "./components/VideoPlayer/ws.player";
 
 const App: React.FC = () => {
     return (
@@ -47,6 +48,9 @@ const App: React.FC = () => {
                             <li className="nav-item">
                                 <Link to={'/quiz'} className="nav-link">Quiz</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link to={'/ws'} className="nav-link">WS Player</Link>
+                            </li>
                         </ul>
                     </div>
                 </nav> <br/>
@@ -61,6 +65,7 @@ const App: React.FC = () => {
                     <Route path='/i18n' element={<I18nHome/>}/>
                     <Route path='/music' element={<Musique/>}/>
                     <Route path='/quiz' element={<QuizGameHome/>}/>
+                    <Route path='/ws' element={<WsPlayer/>}/>
                 </Routes>
             </div>
         </Router>

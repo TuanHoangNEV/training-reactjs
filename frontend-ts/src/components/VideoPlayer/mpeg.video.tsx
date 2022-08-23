@@ -14,7 +14,8 @@ let nextState: any;
 export default class MpegVideo extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-
+        //videos/video.mp4
+        //https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
         this.state = {
             src: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
         }
