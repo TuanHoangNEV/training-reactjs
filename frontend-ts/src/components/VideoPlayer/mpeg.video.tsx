@@ -8,6 +8,7 @@ interface IProps {
 
 interface IState {
     src: string;
+    type: string
 }
 
 let nextState: any;
@@ -16,8 +17,14 @@ export default class MpegVideo extends React.Component<IProps, IState> {
         super(props);
         //videos/video.mp4
         //https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
+        //videos/m3045.m3u8
+
+        //type="application/x-mpegURL"
+        //type="video/mp4"
+        //type="application/x-rtsp"
         this.state = {
-            src: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
+            src: 'videos/video.mp4',
+            type: 'video/mp4'
         }
     }
 
@@ -45,8 +52,9 @@ export default class MpegVideo extends React.Component<IProps, IState> {
                         onClick={this.onClick}
                     />
                 </div>
-
-                <VideoFeed src={this.state.src}/>
+                <div className={'row'}>
+                    <VideoFeed src={this.state.src} type={this.state.type}/>
+                </div>
             </div>
 
         );

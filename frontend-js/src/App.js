@@ -1,21 +1,36 @@
 import VideoPlayerComponent from "./components/video-player/VideoPlayer";
 import "bootstrap/dist/css/bootstrap.min.css";
+import RtspPlay from "./components/video-player/RtspPlay";
+import MediaPlayer from "./components/video-player/MediaPlayer";
+import SearchMenu from "./components/playback/SearchMenu";
 
 function App() {
     return (
-        <div className="App row">
-            <div className={"col-5"}>
-                <VideoPlayerComponent name={'video-1'} url={'ws://localhost:9000'}/>
+        <div className="App">
+            {/*<div className={"col-5"}>*/}
+            {/*    <RtspPlay id={'video-1'} url={'rtsp://rtsp.stream/pattern'}/>*/}
+            {/*</div>*/}
+
+            {/*<div className={"col-5"}>*/}
+            {/*    <VideoPlayerComponent name={'video-1'} url={'ws://localhost:9000'}/>*/}
+            {/*</div>*/}
+            {/*<div className={"col-5"}>*/}
+            {/*    <MediaPlayer />*/}
+            {/*</div>*/}
+
+            <div className={"col-12"}>
+                <SearchMenu />
             </div>
-            <div className={"col-5"}>
-                <VideoPlayerComponent name={'video-2'} url={'ws://localhost:9100'}/>
-            </div>
-            <div className={"col-5"}>
-                <VideoPlayerComponent name={'video-3'} url={'ws://localhost:9200'}/>
-            </div>
-            <div className={"col-5"}>
-                <VideoPlayerComponent name={'video-4'} url={'ws://localhost:9300'}/>
-            </div>
+
+            {/*<div className={"col-5"}>*/}
+            {/*    <VideoPlayerComponent name={'video-2'} url={'ws://localhost:9100'}/>*/}
+            {/*</div>*/}
+            {/*<div className={"col-5"}>*/}
+            {/*    <VideoPlayerComponent name={'video-3'} url={'ws://localhost:9200'}/>*/}
+            {/*</div>*/}
+            {/*<div className={"col-5"}>*/}
+            {/*    <VideoPlayerComponent name={'video-4'} url={'ws://localhost:9300'}/>*/}
+            {/*</div>*/}
 
             {/*<div className={"col-3"}>*/}
             {/*    <VideoPlayerComponent name={'video-5'} url={'ws://localhost:9400'}/>*/}

@@ -19,8 +19,9 @@ const FilmPlayer: React.FC = () => {
         <Grid container alignContent="center" justifyContent="center" spacing={2} height="100vh">
             <Grid item xs={5}>
                 <Player
+                    //videos/video.mp4
                     url={
-                        'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
+                        'videos/captures.mp4'
                     }
                     light={
                         'https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg'
