@@ -1,0 +1,14 @@
+.search-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    height: 400px;
+    overflow: auto;
+}
+
+.search-menu:hover{
+    opacity: 1;
+}

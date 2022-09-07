@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 
 import '../styles/Table.css'
 
@@ -22,9 +22,11 @@ export const TableCommon = (props) => {
     })
     props.data.forEach((item, i) => {
         let row = []
+
         Object.values(item).forEach((val, index) => {
+            const chkHiddenCol = index >= itemHead.length;
             row.push(
-                <td key={index}>{val}</td>
+                <td key={index} className={chkHiddenCol ? 'd-none' : ''}>{val}</td>
             )
         });
         itemData.push(

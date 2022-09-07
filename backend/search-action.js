@@ -1,28 +1,47 @@
 const express = require('express')
 const app = express()
-const TEST_FOLDER = 'D:\\training-reactjs\\test-git\\Traning-Reacjs\\frontend-js\\public\\videos';
+const VIDEO_FOLDER = 'D:\\training-reactjs\\test-git\\Traning-Reacjs\\frontend-js\\public\\videos\\';
+const IMG_FOLDER = 'D:\\training-reactjs\\test-git\\Traning-Reacjs\\frontend-js\\public\\images\\';
 const fs = require('fs');
+const ffmpeg = require('fluent-ffmpeg');
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 app.use(express.json());
 
 app.post('/search', (req, res) => {
     let result = []
     console.log(req.body)
-    fs.readdirSync(TEST_FOLDER).forEach((file) => {
-        if (fs.lstatSync(TEST_FOLDER + '\\' + file).isFile()) {
-            result.push({url: file})
-        }
-    });
+    let lstCam = req.body.comboBoxSelected;
+    let startDate = req.body.startDate;
+    let endDate = req.body.endDate;
+    for (const cam of lstCam){
+        const camName = cam.label;
+        const camValue = cam.value;
+        fs.readdirSync(VIDEO_FOLDER).forEach((file) => {
+            if (fs.lstatSync(VIDEO_FOLDER + file).isFile()) {
+                result.push({ camName: camName, fileName: file, path: VIDEO_FOLDER})
+            }
+        });
+    }
     res.send(result);
 });
 
 app.post('/get-video', (req, res) => {
     let result = []
     console.log(req.body)
-    let lstData = req.body.listData;
-    let index = req.body.selectedIndex;
-    let fileName = lstData[index];
-    console.log(fileName.url)
+    ffmpeg({ source: VIDEO_FOLDER + req.body.fileName, nolog: true })
+        .on('filenames', function(filenames) {
+            console.log('Will generate ' + filenames.join(', '))
+        })
+        .on('end', function() {
+            console.log('Screenshots taken');
+        })
+        .screenshots({
+            filename: 'thumbnail.jpg',
+            count: 7,
+            folder: IMG_FOLDER
+        });
     res.send(result);
 });
 

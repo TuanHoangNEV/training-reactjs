@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RtspPlay from "./components/video-player/RtspPlay";
 import MediaPlayer from "./components/video-player/MediaPlayer";
 import SearchMenu from "./components/playback/SearchMenu";
+import PlayBackHome from "./components/playback";
 
 function App() {
     return (
@@ -19,7 +20,7 @@ function App() {
             {/*</div>*/}
 
             <div className={"col-12"}>
-                <SearchMenu />
+                <PlayBackHome />
             </div>
 
             {/*<div className={"col-5"}>*/}

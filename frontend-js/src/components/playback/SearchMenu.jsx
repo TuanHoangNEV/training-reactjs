@@ -2,26 +2,25 @@ import React from 'react';
 import TabIndex from "./tab";
 import axios from "axios";
 import {TableCommon} from "../common/table-common";
-import PlayRecord from "./PlayRecord";
-import { MultiSelect } from "react-multi-select-component";
+import {MultiSelect} from "react-multi-select-component";
 
 class SearchMenu extends React.Component {
 
-    constructor() {
-        super();
-        let columns = [{
-            header: 'video-name',
-            accessor: 'url'
-        }];
+    constructor(props) {
+        super(props);
         this.state = {
-            startDate: new Date(),
-            endDate: null,
-            listData: [],
-            selectedIndex: -1,
-            columns: columns,
-            videoUrl: null,
-            comboBoxData: [],
-            comboBoxSelected: []
+            searchInput: {
+                startDate: new Date(),
+                endDate: null,
+                comboBoxSelected: []
+            },
+            responseData: {
+                comboBoxData: [],
+                listVideo: []
+            },
+            playContext: {
+                selectedIndex: -1
+            }
         };
         this.onSearch = this.onSearch.bind(this);
     }
@@ -29,8 +28,14 @@ class SearchMenu extends React.Component {
     componentDidMount() {
         axios.get(`/get-all-cb-data`)
             .then(res => {
-                if (res.status === 200){
-                    this.setState({ comboBoxData: res.data });
+                if (res.status === 200) {
+                    this.setState(prevState => ({
+                            responseData: {
+                                ...prevState.responseData,
+                                comboBoxData: res.data
+                            }
+                        }
+                    ));
                 }
             })
             .catch(error => console.log(error));
@@ -41,13 +46,21 @@ class SearchMenu extends React.Component {
         axios({
             method: 'post',
             url: '/search',
-            data: JSON.stringify(this.state),
+            data: JSON.stringify(this.state.searchInput),
             headers: {'Content-Type': 'application/json'},
         })
             .then(function (response) {
                 if (response.status === 200) {
-                    console.log(response.data);
-                    context.setState({listData: response.data, selectedIndex: -1, videoUrl: null});
+                    context.setState(prevState => ({
+                        responseData: {
+                            ...prevState.responseData,
+                            listVideo: response.data
+                        },
+                        playContext: {
+                            selectedIndex: -1
+                        }
+                    }));
+                    context.props.onUpdateVideoUrl(null)
                 }
             })
             .catch(function (err) {
@@ -56,32 +69,34 @@ class SearchMenu extends React.Component {
     }
 
     onChangeDate = (startDate, endDate) => {
-        let nextState = {
+        this.setState(prevState => ({
             ...this.state,
-            startDate: startDate,
-            endDate: endDate
-        };
-        this.setState(nextState);
+            searchInput: {
+                ...prevState.searchInput,
+                startDate: startDate,
+                endDate: endDate
+            }
+        }));
     }
 
     onSelected = (index) => {
-        let nextState = {
-            ...this.state,
-            selectedIndex: index
-        };
-        this.setState(nextState);
+        this.setState(prevState => ({
+            playContext: {
+                ...prevState.playContext,
+                selectedIndex: index,
+            }
+        }));
     }
 
     loadPlayer = () => {
-        this.setState({videoUrl: null});
-        let lstData = this.state.listData;
-        let index = this.state.selectedIndex;
-        let fileName = lstData[index].url;
-        this.setState({videoUrl: 'videos/' + fileName});
+        let lstData = this.state.responseData.listVideo;
+        let index = this.state.playContext.selectedIndex;
+        let fileName = lstData[index].fileName;
+        this.props.onUpdateVideoUrl(fileName);
         axios({
             method: 'post',
             url: '/get-video',
-            data: JSON.stringify(this.state),
+            data: JSON.stringify({fileName: fileName}),
             headers: {'Content-Type': 'application/json'},
         })
             .then(function (response) {
@@ -95,20 +110,25 @@ class SearchMenu extends React.Component {
     }
 
     selectComboBox = (data) => {
-        this.setState({comboBoxSelected: data});
+        this.setState(prevState => ({
+            searchInput: {
+                ...prevState.searchInput,
+                comboBoxSelected: data
+            }
+        }));
     }
 
     render() {
         return (
-            <div className={'col-12 ps-4'}>
+            <div className={'col-4 ps-4 search-menu'}>
                 <div className={'row col-12'}>
-                    <label className={'col-2'}>Pick camera</label>
+                    <label className={'col-4'}>Pick camera</label>
                     <MultiSelect
-                        options={this.state.comboBoxData}
-                        value={this.state.comboBoxSelected}
+                        options={this.state.responseData.comboBoxData}
+                        value={this.state.searchInput.comboBoxSelected}
                         onChange={this.selectComboBox}
                         labelledBy="Select"
-                        className={'col-3'}
+                        className={'col-6'}
                     />
                 </div>
                 <div className={'row col-12'}>
@@ -117,29 +137,20 @@ class SearchMenu extends React.Component {
                 <button className={'btn btn-primary'} onClick={this.onSearch}>Search</button>
                 <h1>{this.state.count}</h1>
                 <div className={'col-12'}>
-                    <div className={'col-4'}>
-                        {this.state.listData ?
-                            <TableCommon colName={['video-name']} colSize={['2em']}
-                                         selectedIndex={this.state.selectedIndex}
-                                         data={this.state.listData} onSelected={this.onSelected}/>
+                    <div className={'col-6'}>
+                        {this.state.responseData.listVideo ?
+                            <TableCommon colName={['camera-name','video-name']} colSize={['2em','2em']}
+                                         selectedIndex={this.state.playContext.selectedIndex}
+                                         data={this.state.responseData.listVideo} onSelected={this.onSelected}/>
                             : null
                         }
                     </div>
                 </div>
                 {
-                    this.state.selectedIndex > -1 ?
+                    this.state.playContext.selectedIndex > -1 ?
                         <button className={'btn btn-primary'} onClick={this.loadPlayer}>Play</button>
                         : null
                 }
-                <div className={'col-5'}>
-                    {
-                        this.state.videoUrl ?
-                            <PlayRecord url={this.state.videoUrl} type={'video/mp4'}/>
-                            : null
-                    }
-                </div>
-
-
             </div>
         );
     }

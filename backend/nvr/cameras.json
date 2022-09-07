@@ -1,0 +1,6 @@
+[
+    {
+        "name": "anh-duc-camera",
+        "url": "rtsp://admin:11111Qaz@172.20.109.248:554/cam/realmonitor?channel=1&subtype=0"
+    }
+]

@@ -24,7 +24,7 @@ const VideoPlayerComponent = ({name, url}) => {
                 // player.destroy()
             }
         };
-    }, [ref]);
+    }, [ref, url]);
 
     return (
         <div id={`${name}`}>
