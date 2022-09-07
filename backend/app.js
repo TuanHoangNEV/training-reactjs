@@ -14,12 +14,12 @@ app.get('/video', (req, res) => {
 
     // rtsp://username:password@ip_address
     // videos/video.mp4
-    ffmpeg('rtsp://rtsp.stream/pattern', { timeout: 100000 }).addOptions([
+    ffmpeg('rtsp://rtsp.stream/pattern', {timeout: 100000}).addOptions([
         '-profile:v baseline',
         '-fflags -nobuffer', // causes lower latency
         '-probesize 32', // causes lower latency
         '-s 480x360', // resolution
-        '-level 3.0', 
+        '-level 3.0',
         '-start_number 0',
         '-hls_time 2', // length of each segment
         '-hls_list_size 0',
@@ -47,16 +47,16 @@ app.get('/video', (req, res) => {
                         console.log("==========")
                         console.log("==========m3u8 file detected==========")
                         console.log("==========")
-                        
+
                         headersSent = true
-                        
+
                         // send a response to frontend
-                        res.sendStatus(200) 
+                        res.sendStatus(200)
                     }
                 }
             });
-    })
-    .run();
+        })
+        .run();
 });
 
 app.post('/post-video/:url', (req, res) => {

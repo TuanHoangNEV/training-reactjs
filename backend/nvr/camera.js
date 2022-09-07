@@ -2,7 +2,7 @@ const childProcess = require("child_process");
 const path = require("path");
 const fs = require('fs');
 const fsAsync = require('fs').promises;
-var CronJob = require('cron').CronJob;
+const CronJob = require('cron').CronJob;
 
 const storage = require('./storage.json');
 const cameraConfigs = require('./cameras.json');
@@ -197,7 +197,7 @@ function dayDirectory(baseDir = '/', date = new Date()) {
 }
 
 function add_zero(your_number, length = 2) {
-    var num = '' + your_number;
+    let num = '' + your_number;
     while (num.length < length) {
         num = '0' + num;
     }

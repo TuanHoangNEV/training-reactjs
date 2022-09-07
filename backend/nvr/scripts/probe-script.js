@@ -1,23 +1,23 @@
 const childProcess = require("child_process");
 const spawn = require('child_process').spawn;
-var args = process.argv.slice(2);
+const args = process.argv.slice(2);
 const directory = args[0];
 
 
 function runProbe(filePath) {
     return new Promise((resolve, reject) => {
-        var params = [];
+        const params = [];
         params.push('-show_streams', '-print_format', 'json', filePath);
-    
-        var info;
-        var stderr;
-    
-        var ffprobe = spawn('ffprobe', params);
+
+        let info;
+        let stderr;
+
+        const ffprobe = spawn('ffprobe', params);
         ffprobe.once('close', function (code) {
             if (!code) {
                 resolve(info);
             } else {
-                var err = stderr.split('\n').filter(Boolean).pop();
+                const err = stderr.split('\n').filter(Boolean).pop();
                 reject(new Error(err));
             }
         });

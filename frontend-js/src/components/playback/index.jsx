@@ -2,18 +2,23 @@ import React from 'react';
 import SearchMenu from "./SearchMenu";
 import '../styles/playback.styles.css'
 import PlayRecord from "./PlayRecord";
+import PlayerControls from "./PlayerControls";
 
 class PlayBackHome extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            videoUrl: null
+            videoUrl: null,
+            lstThumbnail: []
         }
     }
 
     onUpdateVideoUrl = (fileName) => {
         this.setState({videoUrl: (fileName ? 'videos/' + fileName : null)});
+    }
+    onUpdateLstThumbnail = (data) => {
+        this.setState({lstThumbnail: data});
     }
 
 
@@ -25,7 +30,12 @@ class PlayBackHome extends React.Component {
                         <PlayRecord url={this.state.videoUrl} type={'video/mp4'}/>
                         : null
                 }
-                <SearchMenu onUpdateVideoUrl={this.onUpdateVideoUrl}/>
+                <SearchMenu onUpdateVideoUrl={this.onUpdateVideoUrl} onUpdateLstThumbnail={this.onUpdateLstThumbnail}/>
+                {
+                    this.state.lstThumbnail ?
+                        <PlayerControls lstImg={this.state.lstThumbnail} />
+                        : null
+                }
             </div>
 
         );

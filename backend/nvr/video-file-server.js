@@ -15,8 +15,6 @@ router.get('/api/*.:ext', (req, res, next) => {
     const ext = req.params.ext;
     const parts = `${req.params['0']}.${ext}`.split('/').filter(x => x.length > 0);
 
-
-    // https://stackoverflow.com/a/24977085/10159640
     const filepath = path.join(storage.rootpath, ...parts);
     fs.stat(filepath, function (err, stats) {
         if (err) {
@@ -53,7 +51,7 @@ router.get('/api/*.:ext', (req, res, next) => {
         // HTTP Status 206 for Partial Content
         res.writeHead(206, headers);
 
-        var stream = fs.createReadStream(filepath, { start: start, end: end })
+        const stream = fs.createReadStream(filepath, {start: start, end: end})
             .on("open", function () {
                 stream.pipe(res);
             }).on("error", function (err) {

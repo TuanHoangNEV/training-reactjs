@@ -1,13 +1,18 @@
 const express = require('express')
 const app = express()
-const VIDEO_FOLDER = 'D:\\training-reactjs\\test-git\\Traning-Reacjs\\frontend-js\\public\\videos\\';
-const IMG_FOLDER = 'D:\\training-reactjs\\test-git\\Traning-Reacjs\\frontend-js\\public\\images\\';
+
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+const path = require('path');
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+const VIDEO_FOLDER = 'D:\\training-reactjs\\test-git\\Traning-Reacjs\\frontend-js\\public\\videos\\';
+const IMG_FOLDER = 'D:\\training-reactjs\\media\\thumbnail\\';
+const THUMBNAIL_GOLDER = __dirname + '/images/'
 
 app.use(express.json());
+app.use(express.static(THUMBNAIL_GOLDER));
+
 
 app.post('/search', (req, res) => {
     let result = []
@@ -32,17 +37,17 @@ app.post('/get-video', (req, res) => {
     console.log(req.body)
     ffmpeg({ source: VIDEO_FOLDER + req.body.fileName, nolog: true })
         .on('filenames', function(filenames) {
-            console.log('Will generate ' + filenames.join(', '))
+            console.log('File name');
+            result = filenames;
         })
         .on('end', function() {
             console.log('Screenshots taken');
+            res.send(result);
         })
         .screenshots({
             filename: 'thumbnail.jpg',
-            count: 7,
-            folder: IMG_FOLDER
-        });
-    res.send(result);
+            count: 7
+        }, 'images');
 });
 
 app.get('/get-all-cb-data', (req, res) => {

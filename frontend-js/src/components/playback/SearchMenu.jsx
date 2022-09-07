@@ -93,6 +93,7 @@ class SearchMenu extends React.Component {
         let index = this.state.playContext.selectedIndex;
         let fileName = lstData[index].fileName;
         this.props.onUpdateVideoUrl(fileName);
+        let context = this;
         axios({
             method: 'post',
             url: '/get-video',
@@ -102,6 +103,7 @@ class SearchMenu extends React.Component {
             .then(function (response) {
                 if (response.status === 200) {
                     console.log(response.data);
+                    context.props.onUpdateLstThumbnail(response.data)
                 }
             })
             .catch(function (err) {
@@ -146,6 +148,7 @@ class SearchMenu extends React.Component {
                         }
                     </div>
                 </div>
+
                 {
                     this.state.playContext.selectedIndex > -1 ?
                         <button className={'btn btn-primary'} onClick={this.loadPlayer}>Play</button>
