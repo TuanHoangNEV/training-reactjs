@@ -34,20 +34,21 @@ app.post('/search', (req, res) => {
 
 app.post('/get-video', (req, res) => {
     let result = []
-    console.log(req.body)
-    ffmpeg({ source: VIDEO_FOLDER + req.body.fileName, nolog: true })
-        .on('filenames', function(filenames) {
-            console.log('File name');
-            result = filenames;
-        })
-        .on('end', function() {
-            console.log('Screenshots taken');
-            res.send(result);
-        })
-        .screenshots({
-            filename: 'thumbnail.jpg',
-            count: 7
-        }, 'images');
+    for (let i = 1; i < 8; i++){
+        ffmpeg({ source: VIDEO_FOLDER + req.body.fileName, nolog: true })
+            .on('filenames', function(filenames) {
+                console.log('File name ' + filenames);
+                result.push(filenames);
+            })
+            .on('end', function() {
+            })
+            .screenshots({
+                filename: '2-images-%s.jpg',
+                timestamps: [5142 * i],
+            }, 'images');
+    }
+    console.log('rs ' + result);
+    res.send(result);
 });
 
 app.get('/get-all-cb-data', (req, res) => {

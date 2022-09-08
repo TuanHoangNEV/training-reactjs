@@ -43,6 +43,7 @@ class CameraStream {
             "-use_wallclock_as_timestamps", "1", // Fix the timestamps in the file not being correct
             "-i", this.url,
             "-vcodec", "libx265",
+            "-acodec", "copy",
             "-f", "segment",
             "-reset_timestamps", "1",
             "-segment_time", `${videoLengthSeconds}`,
