@@ -61,6 +61,7 @@ class SearchMenu extends React.Component {
                         }
                     }));
                     context.props.onUpdateVideoUrl(null)
+                    context.props.onUpdateLstThumbnail(null)
                 }
             })
             .catch(function (err) {
@@ -92,11 +93,27 @@ class SearchMenu extends React.Component {
         let lstData = this.state.responseData.listVideo;
         let index = this.state.playContext.selectedIndex;
         let fileName = lstData[index].fileName;
-        this.props.onUpdateVideoUrl(fileName);
+        //this.props.onUpdateVideoUrl(fileName);
         let context = this;
         axios({
             method: 'post',
-            url: '/get-video',
+            url: '/decode-video',
+            data: JSON.stringify({fileName: fileName}),
+            headers: {'Content-Type': 'application/json'},
+        })
+            .then(function (response) {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    context.props.onUpdateVideoUrl(response.data);
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+
+        axios({
+            method: 'post',
+            url: '/get-thumbnail',
             data: JSON.stringify({fileName: fileName}),
             headers: {'Content-Type': 'application/json'},
         })
@@ -109,6 +126,8 @@ class SearchMenu extends React.Component {
             .catch(function (err) {
                 console.log(err);
             });
+
+
     }
 
     selectComboBox = (data) => {
@@ -141,7 +160,7 @@ class SearchMenu extends React.Component {
                 <div className={'col-12'}>
                     <div className={'col-6'}>
                         {this.state.responseData.listVideo ?
-                            <TableCommon colName={['camera-name','video-name']} colSize={['2em','2em']}
+                            <TableCommon colName={['camera-name', 'video-name']} colSize={['2em', '2em']}
                                          selectedIndex={this.state.playContext.selectedIndex}
                                          data={this.state.responseData.listVideo} onSelected={this.onSelected}/>
                             : null

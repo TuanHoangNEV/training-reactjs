@@ -27,7 +27,7 @@ class PlayBackHome extends React.Component {
             <div className={"col-8"}>
                 {
                     this.state.videoUrl ?
-                        <PlayRecord url={this.state.videoUrl} type={'video/mp4'}/>
+                        <PlayRecord url={this.state.videoUrl}/>
                         : null
                 }
                 <SearchMenu onUpdateVideoUrl={this.onUpdateVideoUrl} onUpdateLstThumbnail={this.onUpdateLstThumbnail}/>

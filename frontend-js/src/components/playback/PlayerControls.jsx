@@ -1,6 +1,11 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 
 const PlayerControls = (props) => {
+    const imgRef = useRef();
+
+    useEffect(() => {
+    }, [props.lstImg]);
+
     let itemData = [];
 
     props.lstImg.forEach((item, i) => {
@@ -10,9 +15,8 @@ const PlayerControls = (props) => {
     })
 
     return (
-        <div className={'row col-12'}>
+        <div className={'row col-12'} ref={imgRef}>
             {itemData}
-
         </div>
     );
 }

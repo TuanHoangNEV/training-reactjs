@@ -8,7 +8,7 @@ const PlayRecord = (props) => {
     }, [props.url]);
 
     return (
-        <video ref={videoRef} className={'m-auto w-100'} controls>
+        <video ref={videoRef} className={'m-auto w-100'} controls autoPlay={true}>
             <source src={props.url} type={props.type}/>
         </video>
     );

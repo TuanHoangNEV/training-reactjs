@@ -29,7 +29,6 @@ class CameraStream {
         this.storagePath = path.join(storage.rootpath, this.name);
         this.rawStoragePath = path.join(this.storagePath, 'raw');
 
-
         fs.mkdirSync(this.rawStoragePath, { recursive: true });
 
         this.ffmpegProcess = null;
@@ -39,10 +38,9 @@ class CameraStream {
             "-hide_banner",
             "-y",
             "-loglevel", "error",
-            "-rtsp_transport", "tcp",
             "-use_wallclock_as_timestamps", "1", // Fix the timestamps in the file not being correct
             "-i", this.url,
-            "-vcodec", "libx265",
+            "-vcodec", "copy", //libsvtav1 libx265
             "-acodec", "copy",
             "-f", "segment",
             "-reset_timestamps", "1",
@@ -50,7 +48,7 @@ class CameraStream {
             "-segment_format", "mkv",
             "-segment_atclocktime", "1",
             "-strftime", "1",
-            `${path.join(this.rawStoragePath, "%Y-%m-%dT%H %M %S%z.mkv")}`
+            `${path.join(this.rawStoragePath, "%Y-%m-%dT%H-%M-%S.mkv")}`
         ];
 
         this.initTimeoutWatcher();

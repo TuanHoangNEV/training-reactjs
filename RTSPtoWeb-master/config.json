@@ -1,0 +1,96 @@
+{
+  "channel_defaults": {},
+  "server": {
+    "debug": true,
+    "http_debug": false,
+    "http_demo": true,
+    "http_dir": "web",
+    "http_login": "demo",
+    "http_password": "demo",
+    "http_port": ":8083",
+    "https": false,
+    "https_auto_tls": false,
+    "https_auto_tls_name": "",
+    "https_cert": "server.crt",
+    "https_key": "server.key",
+    "https_port": ":443",
+    "ice_credential": "",
+    "ice_servers": [
+      "stun:stun.l.google.com:19302"
+    ],
+    "ice_username": "",
+    "log_level": "debug",
+    "rtsp_port": ":5541",
+    "token": {
+      "backend": "http://127.0.0.1/test.php",
+      "enable": false
+    },
+    "webrtc_port_max": 0,
+    "webrtc_port_min": 0
+  },
+  "streams": {
+    "42b4003a-a067-4f76-99a5-7d47ebee2cd6": {
+      "channels": {
+        "0": {
+          "audio": true,
+          "on_demand": true,
+          "url": "rtsp://rtsp.stream/pattern"
+        }
+      },
+      "name": "rtsp have audio"
+    },
+    "4b2f8d02-8a16-49ba-88c7-15ec4e33c453": {
+      "channels": {
+        "0": {
+          "url": "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4",
+          "audio": true
+        }
+      },
+      "name": "local"
+    },
+    "7be108a9-22c6-4ef1-82ff-9c13d3039ed7": {
+      "channels": {
+        "0": {
+          "url": "rtsp://root:Sccs555Go@http://140.238.48.4:30379/H.264 ",
+          "audio": true
+        }
+      },
+      "name": "abc "
+    },
+    "82a0a211-f93c-4e0a-b4e3-cd681ec8397f": {
+      "channels": {
+        "0": {
+          "url": "rtsp://73.114.177.111/axis-media/media.amp"
+        }
+      },
+      "name": "Bedford Hills"
+    },
+    "a498135d-53ed-41b8-86ad-b7fb5aad61f9": {
+      "channels": {
+        "0": {
+          "audio": true,
+          "url": "rtsp://admin:11111Qaz@172.20.109.248:554/cam/realmonitor?channel=1\u0026subtype=0"
+        }
+      },
+      "name": "Duc's camera subtype 0"
+    },
+    "d027cde4-7dd1-440b-beff-8efee82e3d1b": {
+      "channels": {
+        "0": {
+          "url": "rtsp://171.25.232.136/5090ea43a82340e0b6ee75a5c41e08c4"
+        }
+      },
+      "name": "Test"
+    },
+    "d6c83fb9-f304-4e1d-9411-edb29afc7391": {
+      "channels": {
+        "0": {
+          "audio": true,
+          "on_demand": false,
+          "url": "rtsp://admin:11111Qaz@172.20.109.248:554/cam/realmonitor?channel=1\u0026subtype=1"
+        }
+      },
+      "name": "Duc's camera subtype 1"
+    }
+  }
+}
